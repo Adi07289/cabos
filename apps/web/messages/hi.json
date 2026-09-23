@@ -1,0 +1,17 @@
+{
+  "cab": {
+    "nav": { "shift": "शिफ्ट", "guardian": "सुरक्षा", "academy": "प्रशिक्षण" },
+    "action": {
+      "startShift": "शिफ्ट शुरू करें",
+      "logNearMiss": "नियर-मिस दर्ज करें",
+      "confirmBelt": "बेल्ट की पुष्टि करें"
+    },
+    "alert": {
+      "fastenSeatbelt": "सीट बेल्ट लगाएँ",
+      "unbuckledFor": "बेल्ट खुली: {elapsed} · अलार्म {alarmAt} पर",
+      "linkLost": "गार्जियन कनेक्शन टूटा: मशीन के अलार्म अब भी चालू हैं"
+    },
+    "kpi": { "idle": "निष्क्रिय", "fuel": "ईंधन", "cyclesPerHour": "साइकिल/घंटा", "co2": "CO₂" },
+    "greeting": { "morning": "सुप्रभात, {name}" }
+  }
+}

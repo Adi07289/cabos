@@ -90,9 +90,9 @@ Charts never rely on hue alone: series also differ in dash or marker, and legend
 
 | Theme | Who | Base | Text / contrast target | Density |
 |---|---|---|---|---|
-| **Cab Night** (default cab) | operator, dusk to dawn | ink-900 | AA+ (≥ 6.4:1 all text) | cab (large) |
+| **Cab Night** (default cab) | operator, dusk to dawn | ink-900 | AA on every surface (weakest: tertiary text 5.5:1 on raised cards; 6.4:1 on the background) | cab (large) |
 | **Cab Daylight** | operator, sun up | paper-50 | **AAA ≥ 7:1 all text** | cab (large) |
-| **Office** | supervisor, trainer | paper-0 / paper-50 (Office Dark variant = Night tokens) | AA (secondary text `#5B6168`, 6.26:1) | compact |
+| **Office** | supervisor, trainer | paper-0 / paper-50 (Office Dark variant = Night tokens) | AA (secondary `#5B6168` 6.26:1, tertiary `#62686F` 5.2:1) | compact |
 
 **Auto-switch:** Cab themes switch at local sunrise and sunset, computed client-side from site lat/lon (NOAA algorithm, no network) with a ±20 min hysteresis. A manual override lasts until the next boundary. The switch cross-fades over 560 ms and never happens during an active ALARM, Stop or Danger alert (it waits).
 

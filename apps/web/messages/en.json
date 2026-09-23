@@ -1,0 +1,13 @@
+{
+  "cab": {
+    "nav": { "shift": "Shift", "guardian": "Guardian", "academy": "Academy" },
+    "action": { "startShift": "Start shift", "logNearMiss": "Log near miss", "confirmBelt": "Confirm belt" },
+    "alert": {
+      "fastenSeatbelt": "Fasten seatbelt",
+      "unbuckledFor": "Unbuckled {elapsed} · alarm at {alarmAt}",
+      "linkLost": "Guardian link lost: machine alarms still active"
+    },
+    "kpi": { "idle": "Idle", "fuel": "Fuel", "cyclesPerHour": "Cycles/h", "co2": "CO₂" },
+    "greeting": { "morning": "Good morning, {name}" }
+  }
+}

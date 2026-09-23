@@ -1,0 +1,44 @@
+# Header and category synonyms for Data Studio schema mapping (docs/architecture.md §3.1).
+# Header aliases are compared after normalisation: lowercase, units in brackets removed,
+# separators collapsed to "_". Values are quoted so YAML never turns yes/no/on/off into booleans.
+version: 1
+
+headers:
+  telemetry:
+    timestamp: ["timestamp", "time", "datetime", "date_time", "recorded_at", "ts", "reading_time", "event_time"]
+    machine_id: ["machine_id", "machine", "asset_id", "asset", "equipment_id", "equipment", "unit_id", "serial_number"]
+    operator_id: ["operator_id", "operator", "driver_id", "driver", "badge_id"]
+    engine_hours: ["engine_hours", "engine_hrs", "smu", "hour_meter", "hourmeter", "cumulative_operating_hours", "engine_hour"]
+    fuel_used_l: ["fuel_used_l", "fuel_used", "fuel", "fuel_l", "diesel_used", "fuel_consumed", "fuel_consumption"]
+    load_cycles: ["load_cycles", "cycles", "loads", "cycle_count", "bucket_cycles", "load_count"]
+    idling_time_min: ["idling_time_min", "idling_time", "idle_time", "idle_min", "idle_minutes", "idling", "idle"]
+    seatbelt_status: ["seatbelt_status", "seatbelt", "seat_belt", "belt", "belt_status", "seat_belt_status"]
+    safety_alert_triggered: ["safety_alert_triggered", "safety_alert", "alert_triggered", "alert", "safety_alarm"]
+  tasks:
+    task_id: ["task_id", "task", "job_id", "id", "task_no"]
+    task_type: ["task_type", "type", "activity", "job_type", "work_type"]
+    weather: ["weather", "weather_condition", "conditions", "wx"]
+    operator_skill: ["operator_skill", "skill", "skill_level", "operator_level", "experience_level", "operator_experience"]
+    machine_age_yrs: ["machine_age_yrs", "machine_age", "age_years", "machine_age_years", "age"]
+    estimated_time_min: ["estimated_time_min", "estimated_time", "estimate", "planned_time", "planned_min", "planner_estimate", "est_time"]
+    actual_time_min: ["actual_time_min", "actual_time", "actual", "duration", "duration_min", "time_taken"]
+
+categories:
+  weather:
+    sunny: ["sunny", "clear", "sun", "fair", "dry"]
+    cloudy: ["cloudy", "overcast", "clouds", "partly cloudy"]
+    rainy: ["rainy", "rain", "showers", "drizzle", "wet", "raining"]
+    windy: ["windy", "wind", "gusty", "breezy"]
+    foggy: ["foggy", "fog", "mist", "haze", "hazy", "smog"]
+    hot: ["hot", "heat", "heatwave", "heat wave"]
+    stormy: ["stormy", "storm", "thunderstorm"]
+  operator_skill:
+    beginner: ["beginner", "novice", "junior", "trainee", "entry"]
+    intermediate: ["intermediate", "mid", "medium", "competent"]
+    expert: ["expert", "senior", "advanced", "master"]
+  seatbelt_status:
+    fastened: ["fastened", "buckled", "on", "yes", "y", "1", "true", "locked"]
+    unfastened: ["unfastened", "unbuckled", "off", "no", "n", "0", "false", "open"]
+  boolean:
+    "true": ["yes", "y", "true", "1", "triggered"]
+    "false": ["no", "n", "false", "0", "none"]

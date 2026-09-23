@@ -1,0 +1,26 @@
+# Forecast priors (ADR-008). Values are log-multipliers on actual/estimated time:
+# 0.13 means x1.14 (about +14%). The ridge model is shrunk toward these, so with little data
+# the forecast follows the priors, and as real rows accumulate the data takes over.
+# Onboarding calibration may personalise the operator_skill prior for one operator.
+version: 1
+prior_strength: 5.0          # lambda in ||y - Xb||^2 + lambda * ||b - b0||^2
+residual_sigma_log: 0.15     # prior residual scale; used for P90 while n < 30 ("uncalibrated")
+intercept_log: 0.05          # planners are slightly optimistic by default
+weather:
+  sunny: 0.0
+  cloudy: 0.03
+  rainy: 0.13
+  windy: 0.10
+  foggy: 0.10
+  hot: 0.06
+  stormy: 0.25
+operator_skill:
+  expert: -0.05
+  intermediate: 0.05
+  beginner: 0.20
+task_family:
+  earthmoving: 0.0
+  loading: 0.0
+  finishing: 0.0
+  demolition: 0.05
+machine_age_per_year: 0.005

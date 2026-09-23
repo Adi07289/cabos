@@ -1,0 +1,39 @@
+# Safety timings and limits. Source: docs/architecture.md §7.1 (seatbelt), §7.2 (proximity),
+# docs/decisions.md ADR-021 (link) and ADR-025 (proximity rate). Validated by
+# cabos_core.config.SafetyConfig; the edge runtime and the Cab UI help both read these values.
+version: 1
+
+seatbelt:
+  grace_s: 10            # UNFASTENED_GRACE -> WARN
+  alarm_s: 30            # WARN -> ALARM (unless lockout engaged and stationary)
+  escalate_s: 60         # ALARM -> ESCALATED: notify supervisor, auto-draft incident
+  moving_speed_kmh: 0.5  # above this (or hydraulics active) counts as moving: ALARM immediately
+  flapping_toggles_per_min: 6   # more than this = SENSOR_FAULT, not an operator violation
+  unknown_fault_s: 5     # belt reading "unknown" for longer than this = SENSOR_FAULT
+  sensor_recovery_s: 60  # healthy this long before leaving SENSOR_FAULT
+  tick_ms: 250           # timer evaluation between input edges
+
+proximity:
+  eval_hz: 10
+  # Zone radius = machine tail-swing radius + offset, then x condition multiplier.
+  band_offset_m: { stop: 0.5, danger: 2.0, caution: 5.0, aware: 15.0 }
+  ttc_s: { stop: 1.5, danger: 3.0, caution: 6.0 }
+  min_closing_mps: 0.2
+  downgrade_hold_s: 2.0      # hysteresis: upgrades are immediate, downgrades wait this long
+  travel_lookahead_s: 3.0    # zone elongates along the travel vector by speed x this
+  condition_multiplier: { rain: 1.25, fog: 1.5, night: 1.3 }
+  max_multiplier: 2.0
+
+conditions:
+  wind_limit_kmh: { demolition: 35, lift: 30 }
+  rain_slope_factor: 0.8           # max slope x this while raining
+  heat_index_c: { caution: 32, danger: 41 }
+
+fatigue:
+  continuous_limit_min: 120
+  heat_caution_limit_min: 90
+  heat_danger_limit_min: 60
+
+link:
+  heartbeat_s: 1.0
+  lost_after_s: 2.5

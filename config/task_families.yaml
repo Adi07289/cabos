@@ -1,0 +1,14 @@
+# Task type -> task family (ADR-009). Used for the hierarchical fallback when a task type has
+# never been seen: type -> family -> fleet. Families are checked in the order listed and the
+# first keyword found in the normalised task type wins.
+version: 1
+fallback: unknown
+families:
+  - name: demolition
+    keywords: [demoli, break, wreck, dismantl]
+  - name: loading
+    keywords: [load, haul, truck, stockpil, material handling]
+  - name: finishing
+    keywords: [grad, level, finish, compact, trim, dress]
+  - name: earthmoving
+    keywords: [excavat, trench, dig, earth, cut, fill, bulk, foundation]

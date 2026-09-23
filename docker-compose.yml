@@ -1,0 +1,23 @@
+# Optional. `make dev` works without Docker (SQLite + in-process bus).
+# `make dev-docker` starts Postgres; add `--profile mqtt` for the broker (USE_MQTT=true).
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: cabos
+      POSTGRES_PASSWORD: cabos
+      POSTGRES_DB: cabos
+    ports: ["5432:5432"]
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cabos"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+  mosquitto:
+    image: eclipse-mosquitto:2
+    profiles: ["mqtt"]
+    ports: ["1883:1883"]
+    command: mosquitto -c /mosquitto-no-auth.conf
+volumes:
+  pgdata:

@@ -1,0 +1,148 @@
+@import "tailwindcss";
+@import "../styles/tokens.css";
+
+/* Map CSS-variable tokens into Tailwind utilities (ADR-013). `inline` keeps them live per theme. */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-text: var(--text);
+  --color-text-2: var(--text-2);
+  --color-text-3: var(--text-3);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-pressed: var(--accent-pressed);
+  --color-on-accent: var(--on-accent);
+  --color-accent-text: var(--accent-text);
+  --color-safe: var(--safe);
+  --color-caution: var(--caution);
+  --color-danger: var(--danger);
+  --color-info: var(--info);
+  --color-safe-fill: var(--safe-fill);
+  --color-caution-fill: var(--caution-fill);
+  --color-on-caution-fill: var(--on-caution-fill);
+  --color-danger-fill: var(--danger-fill);
+  --color-info-fill: var(--info-fill);
+  --color-stop-fill: var(--stop-fill);
+  --color-on-stop: var(--on-stop);
+  --color-focus-ring: var(--focus-ring);
+  --color-viz-1: var(--viz-1);
+  --color-viz-2: var(--viz-2);
+  --color-viz-3: var(--viz-3);
+  --color-viz-4: var(--viz-4);
+  --color-viz-5: var(--viz-5);
+  --color-viz-6: var(--viz-6);
+
+  --font-sans: var(--font-geist), var(--font-devanagari), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-numeral: var(--font-barlow), var(--font-geist), sans-serif;
+  --font-serif: var(--font-instrument), ui-serif, Georgia, serif;
+
+  --shadow-e1: var(--e1);
+  --shadow-e2: var(--e2);
+  --shadow-e3: var(--e3);
+
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  --ease-out: var(--ease-out);
+  --ease-in-out: var(--ease-in-out);
+  --ease-in: var(--ease-in);
+}
+
+/* Type scale (design §2.3): size / line-height / tracking / weight. */
+@theme {
+  --text-display-2xl: clamp(4rem, 9vw, 8rem);
+  --text-display-2xl--line-height: 0.875;
+  --text-display-2xl--letter-spacing: -0.045em;
+  --text-display-2xl--font-weight: 600;
+  --text-display-xl: 5.5rem;
+  --text-display-xl--line-height: 5.25rem;
+  --text-display-xl--letter-spacing: -0.04em;
+  --text-display-xl--font-weight: 600;
+  --text-numeral-xl: 6rem;
+  --text-numeral-xl--line-height: 5.5rem;
+  --text-numeral-xl--letter-spacing: -0.01em;
+  --text-numeral-xl--font-weight: 600;
+  --text-numeral-lg: 4rem;
+  --text-numeral-lg--line-height: 3.75rem;
+  --text-numeral-lg--font-weight: 600;
+  --text-numeral-md: 2.5rem;
+  --text-numeral-md--line-height: 2.5rem;
+  --text-numeral-md--font-weight: 500;
+  --text-h1: 2.5rem;
+  --text-h1--line-height: 2.75rem;
+  --text-h1--letter-spacing: -0.025em;
+  --text-h1--font-weight: 600;
+  --text-h2: 1.75rem;
+  --text-h2--line-height: 2.125rem;
+  --text-h2--letter-spacing: -0.02em;
+  --text-h2--font-weight: 600;
+  --text-h3: 1.375rem;
+  --text-h3--line-height: 1.75rem;
+  --text-h3--letter-spacing: -0.01em;
+  --text-h3--font-weight: 600;
+  --text-body-cab: 1.25rem;
+  --text-body-cab--line-height: 1.875rem;
+  --text-body: 1rem;
+  --text-body--line-height: 1.5rem;
+  --text-body-sm: 0.875rem;
+  --text-body-sm--line-height: 1.25rem;
+  --text-label: 0.8125rem;
+  --text-label--line-height: 1rem;
+  --text-label--letter-spacing: 0.04em;
+  --text-label--font-weight: 550;
+  --text-mono: 0.9375rem;
+  --text-mono--line-height: 1.375rem;
+  --text-mono-sm: 0.8125rem;
+  --text-mono-sm--line-height: 1.125rem;
+}
+
+@layer base {
+  html {
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.5;
+    min-height: 100dvh;
+    transition:
+      background-color var(--dur-slower) var(--ease-in-out),
+      color var(--dur-slower) var(--ease-in-out);
+  }
+  /* Cab density: body text never below 18 px (design §6). */
+  [data-density="cab"] body {
+    font-size: 1.25rem;
+    line-height: 1.875rem;
+  }
+  /* Devanagari needs a +2 px bump for legibility (design §8). */
+  html[lang="hi"] body {
+    font-size: calc(1rem + 2px);
+  }
+  html[lang="hi"][data-density="cab"] body {
+    font-size: calc(1.25rem + 2px);
+  }
+  /* Focus: 2 px ring + 2 px offset, never yellow-only on paper (design §8). */
+  :focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px var(--focus-offset);
+    border-radius: 4px;
+  }
+  .tabular {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings:
+      "tnum" 1,
+      "ss01" 1;
+  }
+}

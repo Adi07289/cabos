@@ -1,0 +1,202 @@
+/*
+ * CabOS design tokens: docs/design.md §2.
+ * Values must match src/design/palette.ts and src/design/motion.ts exactly;
+ * tokens.contrast.test.ts fails the build if they drift.
+ */
+
+:root {
+  /* Ramps */
+  --ink-950: #07090b;
+  --ink-900: #0b0e11;
+  --ink-850: #12161a;
+  --ink-800: #1a1f24;
+  --ink-700: #232a30;
+  --ink-600: #2a3138;
+  --ink-500: #3a434b;
+  --ink-400: #56606a;
+  --ink-300: #8b96a0;
+  --ink-200: #a7b0b8;
+  --ink-100: #d5dbe0;
+  --ink-50: #eef1f3;
+  --paper-0: #ffffff;
+  --paper-50: #f6f6f2;
+  --paper-100: #ecece6;
+  --paper-200: #dcdcd4;
+  --paper-300: #bdbdb3;
+  --paper-500: #8f8f86;
+  --paper-700: #4a4d51;
+  --paper-800: #3a3c3f;
+  --paper-950: #0e0f10;
+  --signal-400: #f3ec6a;
+  --signal-500: #ede33b;
+  --signal-600: #cfc521;
+  --signal-ink: #544c00;
+
+  /* Motion (design §2.5) */
+  --dur-instant: 80ms;
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 320ms;
+  --dur-slower: 560ms;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+
+  /* Ergonomics (design §6) */
+  --target-min: 44px;
+  --target-cab: 56px;
+  --target-near-miss: 72px;
+
+  /* Layers (design §2.4) */
+  --z-sticky: 10;
+  --z-dropdown: 20;
+  --z-sheet: 30;
+  --z-toast: 40;
+  --z-alert-banner: 50;
+  --z-safety-overlay: 60;
+  --z-director: 70;
+
+  --blur-sheet: 16px;
+  --blur-hero: 40px;
+}
+
+/* Cab Night: default. Office Dark shares its colours. */
+:root,
+[data-theme="cab-night"],
+[data-theme="office-dark"] {
+  color-scheme: dark;
+  --bg: #0b0e11;
+  --surface: #12161a;
+  --surface-raised: #1a1f24;
+  --surface-sunken: #07090b;
+  --border: #2a3138;
+  --border-strong: #3a434b;
+  --text: #eef1f3;
+  --text-2: #a7b0b8;
+  --text-3: #8b96a0;
+  --accent: #ede33b;
+  --accent-hover: #f3ec6a;
+  --accent-pressed: #cfc521;
+  --on-accent: #0b0e11;
+  --accent-text: #ede33b;
+  --safe: #3ddc97;
+  --caution: #ffb020;
+  --danger: #ff7a70;
+  --info: #5ab0ff;
+  --safe-fill: #113524;
+  --caution-fill: #ffb020;
+  --on-caution-fill: #0b0e11;
+  --danger-fill: #3a1412;
+  --info-fill: #0f2336;
+  --stop-fill: #ff3b30;
+  --on-stop: #0b0e11;
+  --focus-ring: #ede33b;
+  --focus-offset: #0b0e11;
+  --viz-1: #56b4e9;
+  --viz-2: #e69f00;
+  --viz-3: #2fb58a;
+  --viz-4: #cc79a7;
+  --viz-5: #d55e00;
+  --viz-6: #a7b0b8;
+  --e1: 0 1px 0 0 rgb(255 255 255 / 0.04) inset, 0 1px 2px rgb(0 0 0 / 0.4);
+  --e2: 0 1px 0 0 rgb(255 255 255 / 0.05) inset, 0 8px 24px -8px rgb(0 0 0 / 0.6);
+  --e3: 0 1px 0 0 rgb(255 255 255 / 0.06) inset, 0 24px 64px -16px rgb(0 0 0 / 0.7);
+}
+
+/* Cab Daylight: AAA (7:1) text on every surface. */
+[data-theme="cab-day"] {
+  color-scheme: light;
+  --bg: #f6f6f2;
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --surface-sunken: #ecece6;
+  --border: #dcdcd4;
+  --border-strong: #bdbdb3;
+  --text: #0e0f10;
+  --text-2: #3a3c3f;
+  --text-3: #4a4d51;
+  --accent: #ede33b;
+  --accent-hover: #f3ec6a;
+  --accent-pressed: #cfc521;
+  --on-accent: #0e0f10;
+  --accent-text: #544c00;
+  --safe: #055c35;
+  --caution: #6e4000;
+  --danger: #961a13;
+  --info: #0c4a99;
+  --safe-fill: #ddf2e6;
+  --caution-fill: #ffb020;
+  --on-caution-fill: #0e0f10;
+  --danger-fill: #fbe3e1;
+  --info-fill: #e1ecfa;
+  --stop-fill: #c4211a;
+  --on-stop: #ffffff;
+  --focus-ring: #0e0f10;
+  --focus-offset: #ede33b;
+  --viz-1: #0072b2;
+  --viz-2: #a65f00;
+  --viz-3: #00785a;
+  --viz-4: #a34e83;
+  --viz-5: #b34700;
+  --viz-6: #4a4d51;
+  --e1: 0 1px 2px rgb(14 15 16 / 0.06);
+  --e2: 0 8px 24px -8px rgb(14 15 16 / 0.12);
+  --e3: 0 24px 64px -16px rgb(14 15 16 / 0.18);
+}
+
+/* Office: supervisor and trainer desktop. AA. */
+[data-theme="office"] {
+  color-scheme: light;
+  --bg: #f6f6f2;
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --surface-sunken: #ecece6;
+  --border: #dcdcd4;
+  --border-strong: #bdbdb3;
+  --text: #0e0f10;
+  --text-2: #5b6168;
+  --text-3: #62686f;
+  --accent: #ede33b;
+  --accent-hover: #f3ec6a;
+  --accent-pressed: #cfc521;
+  --on-accent: #0e0f10;
+  --accent-text: #544c00;
+  --safe: #055c35;
+  --caution: #6e4000;
+  --danger: #961a13;
+  --info: #0c4a99;
+  --safe-fill: #ddf2e6;
+  --caution-fill: #ffb020;
+  --on-caution-fill: #0e0f10;
+  --danger-fill: #fbe3e1;
+  --info-fill: #e1ecfa;
+  --stop-fill: #c4211a;
+  --on-stop: #ffffff;
+  --focus-ring: #0e0f10;
+  --focus-offset: #ede33b;
+  --viz-1: #0072b2;
+  --viz-2: #a65f00;
+  --viz-3: #00785a;
+  --viz-4: #a34e83;
+  --viz-5: #b34700;
+  --viz-6: #4a4d51;
+  --e1: 0 1px 2px rgb(14 15 16 / 0.06);
+  --e2: 0 8px 24px -8px rgb(14 15 16 / 0.12);
+  --e3: 0 24px 64px -16px rgb(14 15 16 / 0.18);
+}
+
+/* Glove mode: bigger targets (design §6). */
+[data-glove="true"] {
+  --target-cab: 72px;
+  --target-near-miss: 96px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-instant: 0ms;
+    --dur-fast: 0ms;
+    --dur-base: 0ms;
+    --dur-slow: 0ms;
+    --dur-slower: 0ms;
+  }
+}

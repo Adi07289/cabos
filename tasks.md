@@ -85,6 +85,9 @@ Ownership is by **slice**, not by layer, so each person can finish a feature end
 
 **Phase gate:** `make dev` from a clean clone serves `/design`; CI green. Commit `feat(p1): foundation`.
 
+> **P1 status: done** (branch `feat/p1-foundation`). `make check` green: ruff, mypy strict on core, 42 pytest, eslint, tsc, 61 vitest, production build. Verified in Chrome in all themes, at 1440 and 390 px, in Hindi and glove mode, with no console errors.
+> Notes for owners: the `/design` page covers the primitives needed through P3. Select, Combobox, Slider, Table and ScrollArea get added by whoever first needs them. Hindi strings need a native-speaker review (Priyal/M4).
+
 ---
 
 ## Phase 2: Data spine *(M1 + M2 critical path)*

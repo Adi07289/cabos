@@ -2,7 +2,7 @@
 
 > Source of truth for *what* to build: `docs/architecture.md`, `docs/design.md`, `docs/build-plan.md`, `docs/decisions.md` (ADRs).
 > This file says **who builds what, in what order, and how the pieces join**.
-> Put names next to the roles in the table below.
+> **Assignments are final as of this commit.** Swapping roles is fine: agree as a team, then update the table and the legend in one PR.
 
 ## Roles: each member owns a vertical slice (backend + UI)
 
@@ -10,12 +10,31 @@ Ownership is by **slice**, not by layer, so each person can finish a feature end
 
 | Role | Member | Owns (code) | Owns (routes / UI) |
 |---|---|---|---|
-| **M1 Platform & Data** | _name_ | monorepo, CI, `services/api` shell, DB + Alembic, EventBus, WS gateway, event store, `cabos_core.mapping`, import pipeline, auth/RBAC | `/studio` (Data Studio), `/command/*` console shell, `/director` UI |
-| **M2 Intelligence (ML)** | _name_ | `cabos_core.intervals`, `hypotheses`, `pulse`, `forecast`, synthetic generator, model registry, Copilot backend + `LLMProvider` | `/cab/me` (My Pulse), task detail + factor waterfall, `/command/model`, `/command/plan`, `/command/anomalies`, hypothesis cards |
-| **M3 Safety & Simulation** | _name_ | `services/edge-sim`, `cabos_core.safety` (seatbelt, proximity, conditions, fatigue), weather service, incidents backend, Director scenario handlers | `/cab/guardian` (radar, belt panel), alert banner + safety overlay, near-miss sheet, `/command/incidents`, swing simulator |
-| **M4 Experience & Design** | _name_ | design tokens, themes, primitives, fonts, sound/haptics kit, i18n, offline outbox (IndexedDB), realtime client store | `/design`, `/onboarding/*`, `/cab` Shift Deck + CabShell, `/cab/academy/*`, `/trainer`, landing `/`, `/cab/debrief` |
+| **M1 Platform & Data** | **@rizzit17** | monorepo, CI, `services/api` shell, DB + Alembic, EventBus, WS gateway, event store, `cabos_core.mapping`, import pipeline, auth/RBAC | `/studio` (Data Studio), `/command/*` console shell, `/director` UI, `/trainer`, instructor booking, coaching cards |
+| **M2 Intelligence (ML)** | **@Adi07289** (Aditya): also tech lead | `cabos_core.intervals`, `hypotheses`, `pulse`, `forecast`, synthetic generator, model registry, Copilot backend + `LLMProvider` | `/cab/me` (My Pulse), task detail + factor waterfall, `/command/model`, `/command/plan`, `/command/anomalies`, hypothesis cards |
+| **M3 Safety & Simulation** | **@sidverma2407-png** | `services/edge-sim`, `cabos_core.safety` (seatbelt, proximity, conditions, fatigue), weather service, incidents backend, Director scenario handlers | `/cab/guardian` (radar, belt panel), alert banner + safety overlay, near-miss sheet, `/command/incidents`, swing simulator |
+| **M4 Experience & Design** | **@priyal2905** | design tokens, themes, primitives, fonts, sound/haptics kit, i18n, offline outbox (IndexedDB), realtime client store | `/design`, `/onboarding/*`, `/cab` Shift Deck + CabShell, `/cab/academy/*`, landing `/`, `/cab/debrief` |
 
-**Also owns academy backend:** M4 (recommendations, progress, bookings, Skill Passport), because it is mostly UI-driven. M2 supplies the "anomaly → skill node" mapping.
+**Academy backend:** M4 owns recommendations, progress and Skill Passport (mostly UI-driven). M1 owns instructor booking. M2 supplies the "anomaly → skill node" mapping.
+
+**Legend used in every table below:** M1 = @rizzit17 · M2 = @Adi07289 · M3 = @sidverma2407-png · M4 = @priyal2905
+
+### Tech lead duties (@Adi07289)
+- Merges to `main` after review + green CI; resolves contract disputes; keeps `docs/decisions.md` current.
+- Runs the daily 10-min sync and the phase-gate check (`make check` green + gate criteria met) before each phase commit.
+
+### Review pairs (default reviewer for each other's PRs)
+- **M1 ↔ M4** (@rizzit17 ↔ @priyal2905): API, contracts and web wiring.
+- **M2 ↔ M3** (@Adi07289 ↔ @sidverma2407-png): `cabos-core` Python, ML and safety logic.
+- Any PR tagged `contract` also needs the consumer's approval (see Working agreement 3).
+
+### Workload balance (task count across P1–P8, from the tables below)
+| Member | Tasks | Heaviest phase |
+|---|---|---|
+| M1 @rizzit17 | 22 + 1 shared | P2 (data spine critical path) |
+| M2 @Adi07289 | 20 + tech lead | P5 (Pulse + Forecast) |
+| M3 @sidverma2407-png | 16 + 1 shared (fewer, but the heaviest: radar, state machines, simulator) | P4 (Guardian) |
+| M4 @priyal2905 | 17 + 2 shared | P1 + P3 (design system, onboarding, deck) |
 
 ---
 
@@ -30,6 +49,15 @@ Ownership is by **slice**, not by layer, so each person can finish a feature end
 7. **Decisions:** anything that deviates from the docs gets a new ADR appended to `docs/decisions.md` in the same PR.
 
 ---
+
+## Your first tasks (start here once `GO` is given)
+
+| Member | First tasks | Can start without waiting? |
+|---|---|---|
+| **M1 @rizzit17** | P1-01 monorepo + Makefile → P1-02 CI → P1-03 FastAPI shell | Yes: this unblocks everyone, so do it first |
+| **M2 @Adi07289** | P1-04 `cabos-core` + Clock → P1-10 config drafts → P2-03 intervals (fixture test 0.705 / 1.90 / gap) | Yes: pure Python |
+| **M3 @sidverma2407-png** | P1-09 edge-sim skeleton + `safety.yaml` → P4-01 seatbelt state machine (pure Python, table-driven test) early | Yes: the seatbelt SM needs only `cabos-core` |
+| **M4 @priyal2905** | P1-05 Next.js + tokens → P1-06 themes → P1-07 primitives → P1-08 `/design` | Yes, once P1-01 lands (same day) |
 
 ## Phase 0: Kick-off (everyone, first half-day)
 
@@ -144,7 +172,7 @@ Ownership is by **slice**, not by layer, so each person can finish a feature end
 | P6-02 | M4 | Recommendation engine + `because` chips + `training.recommended` | P6-01 | scenario 4 cascades to a recommendation |
 | P6-03 | M4 | Micro-lesson card stacks + scenario drills (content for 15 modules) | P2-10 | complete flow saves progress |
 | P6-04 | M4 | Skill Passport (telemetry-verified streaks, XP, crew challenges) + verify loop (7-day before/after with n) | P6-02, P5-02 | delta computation tested |
-| P6-05 | M4 | Instructor booking (slots, unique booking index) | P2-10 | concurrent booking → one 409 |
+| P6-05 | M1 | Instructor booking (slots, unique booking index) | P2-10 | concurrent booking → one 409 |
 | P6-06 | M3 | Swing simulator (canvas, joystick + keyboard, shared proximity params + parity test) *(first to cut)* | P4-02 | Vitest scoring |
 
 Commit `feat(p6): academy`.
@@ -159,7 +187,7 @@ Commit `feat(p6): academy`.
 | P7-02 | M3 | `/command/incidents` board + detail (black-box player, audit timeline, transitions, optimistic concurrency) | P4-07 | 409 on concurrent edit |
 | P7-03 | M2 | `/command/anomalies` inbox, `/command/plan`, `/command/model` (honest mode, retrain), `/command/thresholds` (audited overrides) | P5-05 | RBAC scoped |
 | P7-04 | M1 | Sustainability ledger (idle L → ₹ → kg CO₂; waiting vs discretionary) | P5-04 | arithmetic tests |
-| P7-05 | M4 | Coaching cards + `/trainer` (curriculum, slots, evidence) | P6-04 | — |
+| P7-05 | M1 | Coaching cards + `/trainer` (curriculum, slots, evidence) | P6-04 | — |
 
 Commit `feat(p7): command`.
 
